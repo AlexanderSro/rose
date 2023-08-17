@@ -1,0 +1,86 @@
+main {
+  min-height: 80vh;
+}
+
+
+/* Default styles for smaller screens for the hero*/
+.hero-carousel img {
+  max-height: 100vh;
+  width: auto;
+  object-fit: cover;
+}
+
+
+@media (min-width: 992px) {
+  .hero-carousel img {
+    max-height: 50vh;
+    object-fit: cover;
+  }
+
+  .hero-container {
+    max-height: 50vh;
+  }
+}
+
+
+/* Styles for product cards */
+
+/* Ensure all cards have the same height */
+.my-3.p-3.rounded {
+  height: 350px; /* Take up the full height available */
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: space-between; /* Distribute space evenly between children */
+}
+
+.Card.Body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Distributes space between items */
+  flex-grow: 1;  /* Allows the body to take up available space */
+}
+
+.product-title{
+  height: 50px;
+
+}
+
+.product-description {
+  height: 80px; /* Set a fixed height for the description */
+  overflow: hidden; /* Hide any content that exceeds the fixed height */
+  text-overflow: ellipsis; /* Indicate that the content is cut off */
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* Limit to 5 lines of text */
+  -webkit-box-orient: vertical;
+}
+
+.product-review {
+  height: 60px;
+}
+
+/* Styles for rating */
+
+.rating span{
+  margin: 0.05rem;
+}
+
+.dynamic-back-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #28a745, #218838);
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.dynamic-back-btn:hover {
+  background: linear-gradient(90deg, #218838, #28a745);
+  transform: translateY(-2px);
+}
+
+.dynamic-back-btn:active {
+  transform: translateY(1px);
+}
