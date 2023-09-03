@@ -21,22 +21,22 @@ function Product({ product }) {
     windowWidth <= 768 ? product.s_description : product.description;
 
   return (
-    <Card className="my-3 p-1 rounded card shadow-lg">
+    <Card className="my-3 p-1 rounded card shadow-lg product-card">
       <div className="position-relative">
         <Link to={`/product/${product._id}`}>
-          <Card.Img
-            variant="top"
-            src={product.image}
-            style={{ height: "200px", objectFit: "fill", width: "100%" }}
-          />
-          <div className="position-absolute bottom-0 start-50 translate-middle badge rounded-pill bg-danger">
+          <Card.Img variant="top" src={product.image} className="product-image" />
+          <div className="position-absolute bottom-0 start-50 translate-middle badge rounded-pill bg-danger product-price-badge">
             {product.price} RON
           </div>
         </Link>
       </div>
-      <Card.Body>
-        <Card.Title className="product-title">{product.name}</Card.Title>
-        <Card.Text className="product-description">{description}</Card.Text>
+      <Card.Body className="product-card-body">
+        <Card.Title className="product-name">
+          {product.name}
+        </Card.Title>
+        <Card.Text className="product-description">
+          {description}
+        </Card.Text>
         <Card.Text as="div" className="product-review">
           <div className="my-3">
             <Rating
@@ -46,11 +46,14 @@ function Product({ product }) {
             />
           </div>
         </Card.Text>
-        <Card.Text as="h3" className="price">
+        <Card.Text as="h5" className="product-footer-price">
           {product.price} RON
         </Card.Text>
         <Link to={`/product/${product._id}`}>
-          <Button variant="outline-warning" className="rounded-pill">
+          <Button
+            variant="outline-warning"
+            className="rounded-pill product-detail-button"
+          >
             Detailii
           </Button>
         </Link>

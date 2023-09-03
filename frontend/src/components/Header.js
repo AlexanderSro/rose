@@ -1,22 +1,29 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faUser } from "@fortawesome/free-solid-svg-icons";
+
 import React from "react";
+
 import { Container, Nav, Navbar } from "react-bootstrap";
+
 import { LinkContainer } from "react-router-bootstrap";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { logout } from "../actions/userActions";
+
 function Header() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   return (
     <header>
-      <Navbar
-        style={{
-          backgroundColor: "black",
-          backgroundImage: 'url("/images/navbar-bg.jpg")',
-          backgroundSize: "cover",
-        }}
-        variant="dark"
-        expand="md"
-        collapseOnSelect
-      >
+      <Navbar variant="dark" expand="md" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -46,11 +53,25 @@ function Header() {
                   <FontAwesomeIcon icon={faShoppingCart} /> Cart
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to={"/login"}>
-                <Nav.Link>
-                  <FontAwesomeIcon icon={faUser} /> Cont
-                </Nav.Link>
-              </LinkContainer>
+
+              {userInfo ? (
+                <>
+                  <LinkContainer to="/profile">
+                    <Nav.Link>
+                      {String(userInfo.name || userInfo.email || "User")}
+                    </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/">
+                    <Nav.Link onClick={logoutHandler}>Deconectati-va</Nav.Link>
+                  </LinkContainer>
+                </>
+              ) : (
+                <LinkContainer to={"/login"}>
+                  <Nav.Link>
+                    <FontAwesomeIcon icon={faUser} /> Cont
+                  </Nav.Link>
+                </LinkContainer>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

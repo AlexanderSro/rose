@@ -4216,6 +4216,7 @@ fieldset:disabled .btn {
   color: var(--bs-card-color);
 }
 .card-title {
+  font-size: 12px;
   margin-bottom: var(--bs-card-title-spacer-y);
   color: var(--bs-card-title-color);
   font-weight: bold;

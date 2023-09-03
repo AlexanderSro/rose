@@ -2,14 +2,12 @@ main {
   min-height: 80vh;
 }
 
-
 /* Default styles for smaller screens for the hero*/
 .hero-carousel img {
   max-height: 100vh;
   width: auto;
   object-fit: cover;
 }
-
 
 @media (min-width: 992px) {
   .hero-carousel img {
@@ -22,45 +20,95 @@ main {
   }
 }
 
+@media (max-width: 1024px) {
+  .product-card {
+    max-width: 100%; /* Make the card take up the full width on small screens */
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 
+@media (max-width: 425px) {
+  .product-review {
+    font-size: 0.9rem; /* Adjust the font size for small screens. You can tweak this value as needed. */
+  }
+}
 /* Styles for product cards */
 
 /* Ensure all cards have the same height */
-.my-3.p-3.rounded {
-  height: 350px; /* Take up the full height available */
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: space-between; /* Distribute space evenly between children */
-}
-
-.Card.Body {
+.product-card {
+  width: 250px;
+  height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Distributes space between items */
-  flex-grow: 1;  /* Allows the body to take up available space */
 }
 
-.product-title{
-  height: 50px;
+.product-image {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
 
+.product-card-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-name {
+  max-width: 100%;
+  overflow: hidden;
+  height: 4em; /* Reserving space for 2 lines; adjust based on your font size and line height */
+  line-height: 1.4em; /* Adjust this based on your font size */
 }
 
 .product-description {
-  height: 80px; /* Set a fixed height for the description */
-  overflow: hidden; /* Hide any content that exceeds the fixed height */
-  text-overflow: ellipsis; /* Indicate that the content is cut off */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3.6rem;
+  line-height: 1.2rem;
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* Limit to 5 lines of text */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
+.product-price-badge {
+  transform: translateX(-50%);
+  padding: 0.2rem 0.5rem;
+  width: 120px; /* Define a fixed width for the price badge */
+  text-align: center; /* Center the price text within the badge */
+  white-space: nowrap; /* Prevent the price from wrapping to the next line */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Use an ellipsis if the price is too long */
+}
+
+.product-footer-price {
+  height: 30px; /* Reserve a fixed height for the price. Adjust as needed. */
+  line-height: 30px; /* Vertically center the text within the reserved space */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Use an ellipsis if the price is too long */
+  white-space: nowrap; /* Prevent the price from wrapping to the next line */
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-detail-button {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .product-review {
-  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Styles for rating */
 
-.rating span{
+.rating span {
   margin: 0.05rem;
 }
 
@@ -84,3 +132,135 @@ main {
 .dynamic-back-btn:active {
   transform: translateY(1px);
 }
+
+@media (max-width: 768px) {
+  /* Adjust card dimensions for tablet and smaller screens */
+  .product-card {
+    width: 50vw; /* 50% of viewport width */
+    height: 70vh; /* 70% of viewport height */
+  }
+
+  /* Adjust image size */
+  .product-image {
+    height: 20vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Adjust font sizes and layout for mobile */
+  .product-name,
+  .product-description,
+  .product-review,
+  .product-footer-price {
+    font-size: 0.9rem;
+  }
+
+  .product-detail-button {
+    padding: 0.3rem 0.6rem; /* Adjust button padding */
+  }
+}
+/* Styles for shopping cart */
+@media (max-width: 2560px) {
+  .qty-btn {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+    margin: 0 0.5rem;
+  }
+}
+
+.container {
+  font-family: "Arial", sans-serif;
+}
+
+.cart-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-items {
+  flex: 2;
+  margin-right: 2rem;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #eee;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cart-item-image {
+  width: 20%;
+  margin-right: 2rem;
+}
+
+.cart-item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cart-item-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.cart-item-price {
+  color: #333;
+}
+
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+}
+
+.qty-btn {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.8rem;
+  margin: 0 0.5rem;
+}
+
+.remove-btn {
+  background-color: red; 
+  color: white;
+  padding: 0.3rem 0.8rem !important;
+  border: none;
+  margin: auto !important;
+}
+
+.cart-summary {
+  flex: 1;
+}
+
+.continue-btn,
+.checkout-btn {
+  display: block;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.continue-btn:hover,
+.checkout-btn:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 765px) {
+  .remove-btn {
+    padding: 0.2rem 0.5rem !important; 
+    font-size: 0.8rem !important;
+  }
+
+  .qty-btn {
+    padding: 0.2rem 0.3rem !important;
+    font-size: 0.8rem !important;
+    margin:  0.4rem !important;
+  }
+}
+

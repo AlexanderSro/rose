@@ -13,8 +13,8 @@ function Hero() {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h3 style={{ color: "#fff" }}>Hero Title 1</h3>
-            <p>Short description for the first slide.</p>
+            <h3 style={{ color: "#fff" }}>Zacusca si dulceata...</h3>
+            <p>Cea mai buna dulceata de pe piata...</p>
             <LinkContainer to={"/shop"} style={{ borderRadius: "50px" }}>
               <Button variant="success">Comanda online</Button>
             </LinkContainer>
@@ -27,8 +27,8 @@ function Hero() {
             alt="Second slide"
           />
           <Carousel.Caption>
-            <h3 style={{ color: "#fff" }}>Hero Title 2</h3>
-            <p>Short description for the second slide.</p>
+            <h3 style={{ color: "#fff" }}>Zacusca si dulceata...</h3>
+            <p>Cea mai tare zacusca de pe piata...</p>
             <LinkContainer to={"/shop"} style={{ borderRadius: "50px" }}>
               <Button variant="warning">Comanda online</Button>
             </LinkContainer>
