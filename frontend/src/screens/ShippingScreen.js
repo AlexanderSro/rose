@@ -87,7 +87,7 @@ function ShippingScreen() {
         </FormGroup>
 
         <FormGroup controlId="city">
-          <FormLabel>Localitate</FormLabel>
+          <FormLabel>Oras</FormLabel>
           <Form.Control
             required
             type="text"
