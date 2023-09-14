@@ -6,6 +6,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 function CartScreen() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
 
@@ -24,9 +27,8 @@ function CartScreen() {
     (acc, item) => acc + item.price * item.qty,
     0
   );
-  const shippingCost = subtotal > 500 ? 0 : 50; // Free shipping for orders over 500
-  const discount = subtotal > 1000 ? 100 : 0; // Discount of 100 for orders over 1000
-  const total = subtotal + shippingCost - discount;
+  const shippingCost = subtotal > 200 ? 0 : 25; // Free shipping for orders over 200
+  const total = subtotal + shippingCost;
 
   useEffect(() => {
     const localCart = JSON.parse(localStorage.getItem("cart"));
@@ -40,75 +42,65 @@ function CartScreen() {
   }, [cartItems]);
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 container-cart">
       <h2 className="mb-4" style={{ color: "#ffffff8c" }}>
         Shopping Cart
       </h2>
       <Row>
-        <Col xs={12} md={8}>
+        <Col sm={12} md={8}>
           {cartItems.map((item) => (
             <Card key={item.product} className="mb-3 cart-item">
-              <Card.Body>
-                <Row className="align-items-center">
-                  <Col xs={4} md={2}>
-                    <Card.Img
-                      src={item.image}
-                      alt={item.name}
-                      className="product-image"
-                    />
-                  </Col>
-                  <Col xs={8} md={4}>
-                    <Card.Title className="cart-item-name">
-                      {item.name}
-                    </Card.Title>
-                    <Card.Text className="cart-item-price">
-                      ${item.price}
-                    </Card.Text>
-                  </Col>
-                  <Col xs={6} md={6} lg={4} className="cart-item-qty">
-                    <Button
-                      size="sm"
-                      variant="outline-secondary"
-                      onClick={() =>
-                        handleQtyChange(item.product, item.qty - 1)
-                      }
-                      className="qty-btn"
-                    >
-                      -
-                    </Button>
-                    {item.qty}
-                    <Button
-                      size="sm"
-                      variant="outline-secondary"
-                      onClick={() =>
-                        handleQtyChange(item.product, item.qty + 1)
-                      }
-                      className="qty-btn"
-                    >
-                      +
-                    </Button>
-                  </Col>
-                  <Col
-                    xs={6}
-                    md={8}
-                    lg={2}
-                    className="d-flex align-items-center justify-content-end"
+              <Card.Body className="cart-item-details">
+                <Col xs={2} sm={2}>
+                  <Card.Img
+                    src={item.image}
+                    alt={item.name}
+                    className="cart-item-image"
+                  />
+                </Col>
+                <Col xs={3} sm={3}>
+                  <Card.Title className="cart-item-name">
+                    {item.name}
+                  </Card.Title>
+                </Col>
+                <Col xs={2} sm={2}>
+                  <Card.Text className="cart-item-price">
+                    {item.price * item.qty} RON
+                  </Card.Text>
+                </Col>
+                <Col xs={3} sm={3} className="cart-item-qty">
+                  {/* Quantity Buttons */}
+                  <Button
+                    size="sm"
+                    variant="outline-secondary"
+                    onClick={() => handleQtyChange(item.product, item.qty - 1)}
                   >
-                    <Button
-                      className="remove-btn rounded-pill"
-                      variant="outline-danger"
-                      onClick={() => handleRemove(item.product)}
-                    >
-                      Remove
-                    </Button>
-                  </Col>
-                </Row>
+                    -
+                  </Button>
+                  {item.qty}
+                  <Button
+                    size="sm"
+                    variant="outline-secondary"
+                    onClick={() => handleQtyChange(item.product, item.qty + 1)}
+                  >
+                    +
+                  </Button>
+                </Col>
+                <Col xs={2} sm={2}>
+                  <Button
+                    variant="outline-danger"
+                    className="remove-btn"
+                    onClick={() => handleRemove(item.product)}
+                  >
+                    Remove
+                  </Button>
+                </Col>
               </Card.Body>
             </Card>
           ))}
         </Col>
 
-        <Col xs={12} sm={12} md={4} lg={2}>
+        <Col sm={12} md={6} lg={4}>
           <Card>
             <Card.Body>
               <Card.Text>
@@ -116,9 +108,6 @@ function CartScreen() {
               </Card.Text>
               <Card.Text>
                 <strong>Cost Livrare:</strong> {shippingCost} RON
-              </Card.Text>
-              <Card.Text>
-                <strong>Discount:</strong> -{discount} RON
               </Card.Text>
               <Card.Text>
                 <strong>Total:</strong> {total} RON
@@ -129,15 +118,25 @@ function CartScreen() {
               >
                 Continua cumparaturile
               </Link>
-              <LinkContainer to="/shipping">
-                <Button 
-                  variant="success"
-                  className="w-100 checkout-btn rounded-pill"
-                  disabled={!Array.isArray(cartItems) || cartItems.length === 0}
-                >
-                  Finalizeaza comanda
-                </Button>
-              </LinkContainer>
+              {userInfo ? (
+                <LinkContainer to="/shipping">
+                  <Button
+                    variant="success"
+                    className="w-100 checkout-btn rounded-pill"
+                  >
+                    Finalizeaza comanda
+                  </Button>
+                </LinkContainer>
+              ) : (
+                <LinkContainer to="/login">
+                  <Button
+                    variant="success"
+                    className="w-100 checkout-btn rounded-pill"
+                  >
+                    Inregistrativa pentru a finaliza
+                  </Button>
+                </LinkContainer>
+              )}
             </Card.Body>
           </Card>
         </Col>

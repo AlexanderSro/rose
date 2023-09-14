@@ -1,0 +1,96 @@
+/* General Styling */
+.summary {
+    background-color: #f4f4f4;
+    padding: 2rem;
+    color: #333;
+    border-radius: 8px;
+  }
+  
+  /* Card Styling */
+  .summary-card, .summary-contact, .summary-shipping {
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .summary-header, .summary-contact .card-header, .summary-shipping .card-header {
+    background-color: #e4e4e4;
+    cursor: pointer;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 8px 8px 0 0;
+    color: #333;
+  }
+  
+  .summary-title, .summary-contact .card-header, .summary-shipping .card-header {
+    margin: 0;
+  }
+  
+  /* Card Body Styling */
+  .summary-card .card-body, .summary-contact .card-body, .summary-shipping .card-body {
+    padding: 1rem;
+  }
+  
+  /* Specific Rows and Columns */
+  .summary-row {
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+  
+  .summary-col {
+    padding: 0.5rem;
+    text-align: center;
+  }
+  
+  /* Continue Button */
+  .summary-button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .summary-button:hover {
+    background-color: #0056b3;
+  }
+
+  .smaller-carousel {
+    max-height: 150px; /* Adjust as needed */
+    overflow: hidden;
+  }
+  
+  .smaller-image {
+    max-height: 150px; /* Adjust as needed */
+    object-fit: cover;
+  }
+  
+  .add-to-cart {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .summary {
+      padding: 1rem;
+    }
+  
+    .summary-header, .summary-contact .card-header, .summary-shipping .card-header, .summary-button {
+      font-size: 1rem;
+    }
+  
+    .summary-col {
+      padding: 0.4rem;
+    }
+  }
+  

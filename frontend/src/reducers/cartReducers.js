@@ -6,13 +6,13 @@ import {
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../constants/cartConstants";
 
-const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
-  ? JSON.parse(localStorage.getItem('shippingAddress'))
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};
 
 const initialState = {
   cartItems: [],
-  shippingAddress: shippingAddressFromStorage,
+  shippingAddress: shippingAddressFromStorage.address || {},
 };
 
 export const cartReducer = (state = initialState, action) => {
@@ -56,6 +56,8 @@ export const cartReducer = (state = initialState, action) => {
       return { cartItems: [] };
 
     case CART_SAVE_SHIPPING_ADDRESS:
+      console.log("Handling CART_SAVE_SHIPPING_ADDRESS with state", state);
+      console.log("Payload", action.payload);
       return {
         ...state,
         shippingAddress: action.payload,
