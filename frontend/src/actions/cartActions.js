@@ -54,10 +54,14 @@ export const clearCart = () => (dispatch, getState) => {
   localStorage.removeItem("cartItems");
 };
 
-export const saveShippingAddress = (data) => (dispatch) => {
+export const saveShippingAddress = (address) => (dispatch, getState) => {
+  console.log("Dispatching saveShippingAddress with payload", address);
+
   dispatch({
     type: CART_SAVE_SHIPPING_ADDRESS,
-    payload: data,
+    payload: address,
   });
-  localStorage.setItem("shippingAddress", JSON.stringify(data));
+
+  const { userLogin: { userInfo } } = getState();
+  localStorage.setItem('shippingAddress', JSON.stringify({ userId: userInfo._id, address }));
 };

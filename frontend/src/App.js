@@ -16,6 +16,8 @@ import CartScreen from "./screens/CartScreen";
 import LoginRegScreen from "./screens/LoginRegScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
+import SummaryScreen from "./screens/SummaryScreen";
+
 
 function MainContent() {
   const location = useLocation();
@@ -42,6 +44,7 @@ function MainContent() {
           <Route path="/shipping/" element={<ShippingScreen />} />
           <Route path="/login/" element={<LoginRegScreen />} />
           <Route path="/profile/" element={<ProfileScreen />} />
+          <Route path="/summary/" element={<SummaryScreen />} />
         </Routes>
       </Container>
       <Footer />
@@ -50,6 +53,8 @@ function MainContent() {
 }
 
 function App() {
+  console.log("Router is being rendered");
+
   return (
     <Router>
       <MainContent />

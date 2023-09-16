@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { listMyOrders } from "../actions/orderActions"; // Import the action
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import "./profilescreen.css";
+import Table from "react-bootstrap/Table";
 
 function ProfileScreen() {
   const [name, setName] = useState("");
@@ -19,12 +21,20 @@ function ProfileScreen() {
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
+  const myOrdersList = useSelector((state) => state.myOrdersList) || {};
+  const {
+    loading: loadingOrders,
+    error: errorOrders,
+    orders = [],
+  } = myOrdersList;
+
   useEffect(() => {
     if (!user || !user.name) {
       dispatch(getUserDetails("profile"));
     } else {
       setName(user.name);
       setEmail(user.email);
+      dispatch(listMyOrders()); // Dispatching the new action
     }
   }, [dispatch, user]);
 
@@ -152,8 +162,44 @@ function ProfileScreen() {
                   <div className="card-back">
                     <div className="center-wrap">
                       <h4 className="mb-4 pb-3">Order History</h4>
-                      {/* Your code for displaying order history */}
-                      {/* ... */}
+
+                      {/* New code for displaying order history */}
+                      {loadingOrders ? (
+                        <Loader />
+                      ) : errorOrders ? (
+                        <Message variant="danger">{errorOrders}</Message>
+                      ) : (
+                        <Table striped bordered hover variant="dark">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Date</th>
+                              <th>Total</th>
+                              <th>Paid</th>
+                              <th>Delivered</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {orders.map((order) => (
+                              <tr key={order._id}>
+                                <td>{order._id}</td>
+                                <td>{order.createdAt.substring(0, 10)}</td>
+                                <td>{order.totalPrice}</td>
+                                <td>
+                                  {order.isPaid
+                                    ? order.paidAt.substring(0, 10)
+                                    : "Not Paid"}
+                                </td>
+                                <td>
+                                  {order.isDelivered
+                                    ? order.deliveredAt.substring(0, 10)
+                                    : "Not Delivered"}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      )}
                     </div>
                   </div>
                 </div>

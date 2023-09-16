@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from base.views import order_views as views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/users/', include('base.urls.user_urls')),
-    path('api/products/', include('base.urls.product_urls')),
-    path('api/orders/', include('base.urls.order_urls')),
+    path("admin/", admin.site.urls),
+    path("api/users/", include("base.urls.user_urls")),
+    path("api/products/", include("base.urls.product_urls")),
+    path("api/orders/", include("base.urls.order_urls")),
+    path("api/orders/myorders/", views.MyOrdersList.as_view(), name="my-orders-list"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

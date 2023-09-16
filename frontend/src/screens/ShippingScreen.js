@@ -1,30 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, FormGroup, FormLabel } from "react-bootstrap";
-import { saveShippingAddress } from "../actions/cartActions"; // Import the action
+import { saveShippingAddress } from "../actions/cartActions";
+import { useNavigate } from "react-router-dom";
 
 import CheckoutSteps from "../components/CheckoutSteps";
 import FormContainer from "../components/FormContainer";
+import DynamicProgressBar from "../components/CheckoutSteps";
 
 function ShippingScreen() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+  const userInfo = useSelector((state) => state.userLogin.userInfo); // Import userInfo
 
-  const [name, setName] = useState(shippingAddress?.name);
-  const [firstName, setFirstName] = useState(shippingAddress?.firstName);
-  const [address, setAddress] = useState(shippingAddress?.address);
-  const [city, setCity] = useState(shippingAddress?.city);
-  const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode);
-  const [country, setCountry] = useState(shippingAddress?.country);
-  const [telNumber, setTelNumber] = useState(shippingAddress?.telNumber);
 
-  const dispatch = useDispatch(); // You already have this
+
+  const [isAddressInitialized, setAddressInitialized] = useState(false); // State variable
+
+  useEffect(() => {
+    console.log("Running useEffect");
+
+    if (!isAddressInitialized && userInfo) {
+      if (!shippingAddress || shippingAddress?.userId !== userInfo._id) {
+        console.log("Dispatching saveShippingAddress");
+        dispatch(saveShippingAddress({ userId: userInfo._id })); // set userId
+        setAddressInitialized(true); // Set flag to true to prevent further dispatch
+      }
+    }
+  }, [userInfo, shippingAddress, dispatch, isAddressInitialized]);
+
+  const [name, setName] = useState(shippingAddress?.name || "");
+  const [firstName, setFirstName] = useState(shippingAddress?.firstName || "");
+  const [address, setAddress] = useState(shippingAddress?.address || "");
+  const [city, setCity] = useState(shippingAddress?.city || "");
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress?.postalCode || ""
+  );
+  const [country, setCountry] = useState(shippingAddress?.country || "");
+  const [telNumber, setTelNumber] = useState(shippingAddress?.telNumber || "");
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // Dispatch the action to save the shipping address
     dispatch(
       saveShippingAddress({
+        userId: userInfo._id,
         firstName,
         name,
         address,
@@ -34,92 +55,85 @@ function ShippingScreen() {
         telNumber,
       })
     );
-    console.log("submit");
+    navigate("/summary");
   };
 
   return (
     <FormContainer>
-      <CheckoutSteps />
+      <DynamicProgressBar step={1} />
+
       <h1 style={{ color: "whitesmoke" }}>Adresa de livrare</h1>
       <Form onSubmit={submitHandler}>
         <FormGroup controlId="firstName">
-          <FormLabel>Prenume</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Prenume</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Prenume"
-            value={firstName ? firstName : ""}
+            value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
         <FormGroup controlId="name">
-          <FormLabel>Nume de familie</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Nume de familie</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Nume de familie"
-            value={name ? name : ""}
+            value={name}
             onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
         <FormGroup controlId="country">
-          <FormLabel>Tara</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Tara</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Tara"
-            value={country ? country : ""}
+            value={country}
             onChange={(e) => setCountry(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
         <FormGroup controlId="address">
-          <FormLabel>Adresa</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Adresa</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Adresa"
-            value={address ? address : ""}
             onChange={(e) => setAddress(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
         <FormGroup controlId="city">
-          <FormLabel>Oras</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Oras</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Localitate"
-            value={city ? city : ""}
+            value={city}
             onChange={(e) => setCity(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
         <FormGroup controlId="postalcode">
-          <FormLabel>Cod Postal</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Cod Postal</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Cod Postal"
-            value={postalCode ? postalCode : ""}
+            value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
         <FormGroup controlId="telNumber">
-          <FormLabel>Telefon</FormLabel>
+          <FormLabel style={{color:"whitesmoke"}}>Telefon</FormLabel>
           <Form.Control
             required
             type="text"
             placeholder="Telefon"
-            value={telNumber ? telNumber : ""}
+            value={telNumber}
             onChange={(e) => setTelNumber(e.target.value)}
-          ></Form.Control>
+          />
         </FormGroup>
-
-        <Button className="btn-login mt-2" type="submit" varian="success">
+        <Button className="btn-login mt-2 rounded-pill" type="submit">
           Continue
         </Button>
       </Form>

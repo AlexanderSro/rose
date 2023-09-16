@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+import stripe
 from pathlib import Path
 from datetime import timedelta
 
@@ -181,3 +182,8 @@ MEDIA_ROOT = "static/images"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_51NnVsVEXyofJnHLgTMowcHoZOkCUK1xosgGRVpsAlsabjrSjkO0jadL6YowUaOTMYlnKm5zXEi97LYktxrR5OpAQ005BoktnGi")
+stripe.api_key = STRIPE_SECRET_KEY
+STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "pk_test_51NnVsVEXyofJnHLgC1D7C9ECdMw67UyaHxbYAzhy4KNY3kJiQvwnj8EIJq2qQap00dYdIMxdpl4jes22AIndLLpj00aPYA8JPr")
